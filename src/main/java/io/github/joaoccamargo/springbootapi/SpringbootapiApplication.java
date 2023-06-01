@@ -23,6 +23,15 @@ public class SpringbootapiApplication {
 			
 			List<Cliente> todosClientes = clientes.obterTodos();
 			todosClientes.forEach(System.out::println);
+
+			todosClientes.forEach(c -> {
+				c.setNome(c.getNome() + " atualizado. ");
+				clientes.atualizar(c);
+			});
+			
+
+			todosClientes = clientes.obterTodos();
+			todosClientes.forEach(System.out::println);
 		};
 	}
 

@@ -15,8 +15,12 @@ import io.github.joaoccamargo.springbootapi.domain.entity.Cliente;
 @Repository
 public class Clientes {
 
+    // JDBC
+
     private static final String INSERT = "INSERT INTO CLIENTE (nome) VALUES (?)";
     private static final String SELECT_ALL = "SELECT * FROM CLIENTE";
+    private static final String UPDATE = "UPDATE CLIENTE SET nome = ? WHERE id = ?";
+    private static final String DELETE = "DELETE FROM CLIENTE WHERE id = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -25,19 +29,40 @@ public class Clientes {
         this.jdbcTemplate = jdbcTemplate;
     }
     
-    public void salvar(Cliente cliente){
+    public Cliente salvar(Cliente cliente){
         jdbcTemplate.update(INSERT, new Object[]{cliente.getNome()});
+        return cliente;
+    }
+
+    public Cliente atualizar(Cliente cliente){
+        jdbcTemplate.update(UPDATE, new Object[]{cliente.getNome(), cliente.getId()});
+        return cliente;
+    }
+
+    public Cliente deletar(Cliente cliente){
+        jdbcTemplate.update(DELETE, new Object[]{cliente.getId()});
+        return cliente;
+    }
+
+    public List<Cliente> buscarPorNome(String nome){
+        return jdbcTemplate.query(SELECT_ALL.concat(" where nome = ? "), 
+                                            new Object[]{"%" + nome + "%"},
+                                            obterClientesMapper());
     }
     
     public List<Cliente> obterTodos(){
-        return jdbcTemplate.query(SELECT_ALL, new RowMapper<Cliente>(){
+        return jdbcTemplate.query(SELECT_ALL, obterClientesMapper());
+    }
+
+    private RowMapper<Cliente> obterClientesMapper(){
+        return new RowMapper<Cliente>(){
             @Override
             public Cliente mapRow(ResultSet resultSet, int i) throws SQLException {
                 Integer id = resultSet.getInt("id");
                 String nome = resultSet.getString("nome");
                 return new Cliente(id, nome);
             }
-        });
+        };
     }
 
 }
