@@ -1,8 +1,25 @@
 package io.github.joaoccamargo.springbootapi.domain.entity;
 
+
+// Import JPA
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
+@Entity // Dizendo para JPA que está é uma entidade
+@Table (name = "cliente") // Tabela do banco de dados é cliente.
 public class Cliente {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO) // Gerar ID Automaticamente H2
+    @Column (name = "id") //Coluna Não precisa colocar caso nome seja igual do banco de dados.
     private Integer id;
+
+    @Column(name = "nome", length = 100)
     private String nome;
 
     public Cliente(){}
