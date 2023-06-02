@@ -3,6 +3,7 @@ package io.github.joaoccamargo.springbootapi.domain.entity;
 
 // Import JPA
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,8 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
-    @OneToMany( mappedBy = "cliente")
+    // LAZY recomendado
+    @OneToMany( mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
     public Cliente(){}
@@ -52,9 +54,17 @@ public class Cliente {
         this.nome = nome;
     }
 
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
     @Override
     public String toString() {
         return "Cliente [id=" + id + ", nome=" + nome + "]";
     }
-    
+
 }
