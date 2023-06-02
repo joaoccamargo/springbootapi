@@ -20,33 +20,37 @@ public class SpringbootapiApplication {
 			clientes.save(new Cliente(null, "Jose"));
 			clientes.save(new Cliente(null, "Maria"));
 			clientes.save(new Cliente(null, "Carlos"));
+
+			boolean existe = clientes.existsByNome("Maria");
+			System.out.println("Existe cliente com nome Maria ? " + existe);
 			
-			List<Cliente> todosClientes = clientes.findAll();
-			todosClientes.forEach(System.out::println);
 
-			System.out.println("Atualizando clientes");
-			todosClientes.forEach(c -> {
-				c.setNome(c.getNome() + " atualizado. ");
-				clientes.save(c);
-			});
+			// List<Cliente> todosClientes = clientes.findAll();
+			// todosClientes.forEach(System.out::println);
+
+			// System.out.println("Atualizando clientes");
+			// todosClientes.forEach(c -> {
+			// 	c.setNome(c.getNome() + " atualizado. ");
+			// 	clientes.save(c);
+			// });
 			
-			todosClientes = clientes.findAll();
-			todosClientes.forEach(System.out::println);
+			// todosClientes = clientes.findAll();
+			// todosClientes.forEach(System.out::println);
 
-			System.out.println("Buscando cliente por nome");
-			clientes.findByNomeLike("Cli").forEach(System.out::println);
+			// System.out.println("Buscando cliente por nome");
+			// clientes.findByNomeLike("Carlos atualizado.").forEach(System.out::println);
 
-			System.out.println("Deletando clientes");
-			clientes.findAll().forEach(c -> {
-				clientes.delete(c);
-			});
+			// System.out.println("Deletando clientes");
+			// clientes.findAll().forEach(c -> {
+			// 	clientes.delete(c);
+			// });
 
-			todosClientes = clientes.findAll();
-			if(todosClientes.isEmpty()){
-				System.out.println("Nenhum cliente encontrado");
-			}else{
-				todosClientes.forEach(System.out::println);
-			}
+			// todosClientes = clientes.findAll();
+			// if(todosClientes.isEmpty()){
+			// 	System.out.println("Nenhum cliente encontrado");
+			// }else{
+			// 	todosClientes.forEach(System.out::println);
+			// }
 
 		};
 	}

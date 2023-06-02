@@ -8,5 +8,9 @@ import io.github.joaoccamargo.springbootapi.domain.entity.Cliente;
 
 public interface Clientes extends JpaRepository<Cliente, Integer>{
 
-    List<Cliente> findByNomeLike(String nome); // Transforma o metodo em uma query.
+    // Transforma metodo em query, query methods
+    List<Cliente> findByNomeLike(String nome);
+    //List<Cliente> findByNomeOrIdOrderById(String nome, Integer id);
+    
+    boolean existsByNome(String nome);
 }
