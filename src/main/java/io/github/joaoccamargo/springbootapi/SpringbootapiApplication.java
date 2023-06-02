@@ -17,21 +17,37 @@ public class SpringbootapiApplication {
 	@Bean
 	public CommandLineRunner init(@Autowired Clientes clientes){
 		return args -> {
-			clientes.salvar(new Cliente(null, "Jose"));
-			clientes.salvar(new Cliente(null, "Maria"));
-			clientes.salvar(new Cliente(null, "Carlos"));
+			clientes.save(new Cliente(null, "Jose"));
+			clientes.save(new Cliente(null, "Maria"));
+			clientes.save(new Cliente(null, "Carlos"));
 			
-			List<Cliente> todosClientes = clientes.obterTodos();
+			List<Cliente> todosClientes = clientes.findAll();
 			todosClientes.forEach(System.out::println);
 
+			System.out.println("Atualizando clientes");
 			todosClientes.forEach(c -> {
 				c.setNome(c.getNome() + " atualizado. ");
-				clientes.atualizar(c);
+				clientes.save(c);
 			});
 			
-
-			todosClientes = clientes.obterTodos();
+			todosClientes = clientes.findAll();
 			todosClientes.forEach(System.out::println);
+
+			System.out.println("Buscando cliente por nome");
+			clientes.findByNomeLike("Cli").forEach(System.out::println);
+
+			System.out.println("Deletando clientes");
+			clientes.findAll().forEach(c -> {
+				clientes.delete(c);
+			});
+
+			todosClientes = clientes.findAll();
+			if(todosClientes.isEmpty()){
+				System.out.println("Nenhum cliente encontrado");
+			}else{
+				todosClientes.forEach(System.out::println);
+			}
+
 		};
 	}
 
