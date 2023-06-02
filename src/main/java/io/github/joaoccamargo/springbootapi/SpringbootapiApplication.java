@@ -21,8 +21,11 @@ public class SpringbootapiApplication {
 			clientes.save(new Cliente(null, "Maria"));
 			clientes.save(new Cliente(null, "Carlos"));
 
-			boolean existe = clientes.existsByNome("Maria");
-			System.out.println("Existe cliente com nome Maria ? " + existe);
+			List<Cliente> result = clientes.encontrarPorNome("Maria");
+			result.forEach(System.out::println);
+
+			// boolean existe = clientes.existsByNome("Maria");
+			// System.out.println("Existe cliente com nome Maria ? " + existe);
 			
 
 			// List<Cliente> todosClientes = clientes.findAll();
@@ -36,9 +39,6 @@ public class SpringbootapiApplication {
 			
 			// todosClientes = clientes.findAll();
 			// todosClientes.forEach(System.out::println);
-
-			// System.out.println("Buscando cliente por nome");
-			// clientes.findByNomeLike("Carlos atualizado.").forEach(System.out::println);
 
 			// System.out.println("Deletando clientes");
 			// clientes.findAll().forEach(c -> {
