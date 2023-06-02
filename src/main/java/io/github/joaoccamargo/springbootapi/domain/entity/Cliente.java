@@ -6,7 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.Set;
+
 import jakarta.persistence.Column;
 
 @Entity // Dizendo para JPA que está é uma entidade
@@ -21,6 +25,9 @@ public class Cliente {
 
     @Column(name = "nome", length = 100)
     private String nome;
+
+    @OneToMany( mappedBy = "cliente")
+    private Set<Pedido> pedidos;
 
     public Cliente(){}
 
