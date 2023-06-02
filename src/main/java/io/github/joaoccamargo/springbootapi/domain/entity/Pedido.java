@@ -3,11 +3,34 @@ package io.github.joaoccamargo.springbootapi.domain.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    // Relacionamento, Um cliente para muitos pedidos. (@ManyToOne)
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
+    @Column(name = "data_pedido")
     private LocalDate dataPedido;
+
+    // 10000.00
+    @Column(name = "total", length = 20, precision = 2)
     private BigDecimal total;
     
     public Integer getId() {
