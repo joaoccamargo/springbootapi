@@ -29,6 +29,9 @@ public class Cliente {
     @Column(name = "nome", length = 100)
     private String nome;
 
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+
     // LAZY recomendado
     @JsonIgnore
     @OneToMany( mappedBy = "cliente", fetch = FetchType.LAZY)
@@ -65,9 +68,19 @@ public class Cliente {
         this.pedidos = pedidos;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+
     @Override
     public String toString() {
         return "Cliente [id=" + id + ", nome=" + nome + "]";
     }
 
+   
 }
