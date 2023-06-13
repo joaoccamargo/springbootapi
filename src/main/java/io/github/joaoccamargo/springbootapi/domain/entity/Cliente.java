@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 
 @Entity // Dizendo para JPA que está é uma entidade
@@ -28,6 +30,7 @@ public class Cliente {
     private String nome;
 
     // LAZY recomendado
+    @JsonIgnore
     @OneToMany( mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<Pedido> pedidos;
 
