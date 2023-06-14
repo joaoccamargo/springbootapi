@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import io.github.joaoccamargo.springbootapi.domain.entity.Cliente;
 
-public interface Clientes extends JpaRepository<Cliente, Integer>{
+public interface ClientesRepository extends JpaRepository<Cliente, Integer>{
 
     // Transforma metodo em query, query methods
     @Query(value = " select * from cliente c where c.nome like '%:nome%' ", nativeQuery = true) // consulta nativa sql
