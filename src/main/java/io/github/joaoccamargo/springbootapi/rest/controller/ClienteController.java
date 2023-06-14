@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import io.github.joaoccamargo.springbootapi.domain.entity.Cliente;
-import io.github.joaoccamargo.springbootapi.domain.repository.Clientes;
+import io.github.joaoccamargo.springbootapi.domain.repository.ClientesRepository;
 
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
 
-    private Clientes clientes;
+    private ClientesRepository clientesRepository;
 
-    public ClienteController(Clientes clientes) {
-        this.clientes = clientes;
+    public ClienteController(ClientesRepository clientes) {
+        this.clientesRepository = clientes;
     }
 
     @GetMapping("{id}")
     public Cliente getClienteById(@PathVariable Integer id){
-        return clientes
+        return clientesRepository
                     .findById(id)
                     .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
@@ -39,15 +39,15 @@ public class ClienteController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente save(@RequestBody Cliente cliente){
-        return clientes.save(cliente);
+        return clientesRepository.save(cliente);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id){
-        clientes.findById(id)
+        clientesRepository.findById(id)
                 .map(cliente -> {
-                    clientes.delete(cliente);
+                    clientesRepository.delete(cliente);
                     return cliente;
                 })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
@@ -57,11 +57,11 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable Integer id, @RequestBody Cliente cliente){
 
-        clientes
+        clientesRepository
             .findById(id)
             .map(clienteExistente -> {
             cliente.setId(clienteExistente.getId());
-            clientes.save(cliente);
+            clientesRepository.save(cliente);
             return clienteExistente;
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
@@ -75,7 +75,7 @@ public class ClienteController {
                                         ExampleMatcher.StringMatcher.CONTAINING);
 
         Example example = Example.of(filtro, matcher);
-        return clientes.findAll(example);
+        return clientesRepository.findAll(example);
     }
 
 }
